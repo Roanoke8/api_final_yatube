@@ -37,10 +37,9 @@ class FollowSerializer(serializers.ModelSerializer):
         read_only=True,
         slug_field='username'
     )
-    author = serializers.SlugRelatedField( #TODO: может другой типо поля ?
-        read_only=False,
-        slug_field='username'
-    )
+    # author = serializers.SlugField( #TODO: может другой типо поля ?
+    #     slug_field='username'
+    # )
     
     class Meta:
         fields = '__all__'
