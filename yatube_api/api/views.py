@@ -1,4 +1,3 @@
-from re import S
 from rest_framework import mixins, viewsets
 
 from posts.models import Comment, Follow, Group, Post
