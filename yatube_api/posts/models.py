@@ -1,21 +1,20 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models.fields import TextField, CharField, SlugField
 
 User = get_user_model()
 
 class Group(models.Model):
-    title = CharField(
+    title = models.CharField(
         max_length=200
-    ),
-    slug = SlugField(
-        max_length=200,
+    )
+    slug = models.SlugField(
+        max_length=50,
         unique=True
-    ),
-    description = TextField(),
+    )
+    description = models.TextField()
 
     def __str__(self):
-        return self.title
+        return self.slug
 
 
 class Post(models.Model):
@@ -42,8 +41,6 @@ class Post(models.Model):
         related_name='posts'
     )
 
-    class Meta:
-        ordering = ['-pub_date']
 
     def __str__(self):
         return self.text
