@@ -1,14 +1,14 @@
-from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_list_or_404, get_object_or_404
+from rest_framework import mixins, viewsets
+from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.permissions import IsAuthenticated
 
 from posts.models import Comment, Follow, Group, Post
 
-from rest_framework import mixins, viewsets
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.pagination import LimitOffsetPagination
-
-from .serializers import CommentSerializer, FollowSerializer, GroupSerializer, PostSerializer
 from .permissions import IsOwnerOrReadOnly
+from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer,
+                          PostSerializer)
 
 User = get_user_model()
 
