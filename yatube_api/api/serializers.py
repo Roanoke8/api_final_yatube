@@ -6,7 +6,6 @@ from posts.models import Comment, Follow, Group, Post, User
 
 
 class PostSerializer(serializers.ModelSerializer):
-    """##TODO"""
     author = SlugRelatedField(
         slug_field='username',
         read_only=True
@@ -18,7 +17,6 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    """##TODO"""
     author = serializers.SlugRelatedField(
         read_only=True,
         slug_field='username'
@@ -31,14 +29,12 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
-    """###TODO"""
     class Meta:
         fields = '__all__'
         model = Group
 
 
 class FollowSerializer(serializers.ModelSerializer):
-    """##TODO"""
     user = serializers.SlugRelatedField(
         read_only=True,
         slug_field='username',
@@ -59,7 +55,6 @@ class FollowSerializer(serializers.ModelSerializer):
     ]
 
     def validate(self, data):
-        """##TODO"""
         if self.context['request'].user == data['following']:
             raise serializers.ValidationError(
                 'нельзя подписываться на самого себя!'
