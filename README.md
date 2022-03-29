@@ -9,8 +9,8 @@ ___
 
 1. Склонировать проект и перейти в папку проекта:
 ```
-> git clone git@github.com:antonysan/api_final_yatube.git 
-> cd api_final_yatube 
+git clone git@github.com:antonysan/api_final_yatube.git 
+cd api_final_yatube 
 ```
 
 Структура проекта:
@@ -43,18 +43,18 @@ ___
 
 2. Установить виртуальное окружение и активировать его:
 ```
-> python3 -m venv venv 
-> source venv/bin/activate
+python3 -m venv venv 
+source venv/bin/activate
 ```
 
 3. Установить зависимости из файла requirements.txt:
 ```
-> pip3 install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 4. Запустить сервер
 ```
-> cd yatube_api
-> python3 manage.py runserver
+cd yatube_api
+python3 manage.py runserver
 ```
 ___
 ### Примеры запросов
@@ -62,7 +62,7 @@ ___
 Получить список последних постов: 
 - тип запроса: GET
 ```
-> http://127.0.0.1:8000/api/v1/posts/
+http://127.0.0.1:8000/api/v1/posts/
 ```
 ```
 [
@@ -80,7 +80,7 @@ ___
 Создать пост:
 - Тип запроса: POST
 ```
-> http://127.0.0.1:8000/api/v1/posts/
+http://127.0.0.1:8000/api/v1/posts/
 ```
 - Тело запроса:
 ```
