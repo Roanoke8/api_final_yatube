@@ -1,17 +1,17 @@
-from django.contrib.auth import get_user_model
-from django.shortcuts import get_list_or_404, get_object_or_404
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
 
-from posts.models import Comment, Follow, Group, Post
+from posts.models import Comment, Follow, Group, Post, User
 
 from .mixins import CreateViewSet, ListViewSet
 from .permissions import IsOwnerOrReadOnly
 from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer,
                           PostSerializer)
 
-User = get_user_model()
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -40,32 +40,14 @@ class FollowViewSet(ListViewSet, CreateViewSet):
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    search_fields = ('following__username', )
 
     def get_queryset(self):
-        """Принимает передаваемое имя пользователя в
-        запросе с ключем search.
-        Если пользователь не найден возвращает 404"""
-        queryset = self.request.user.follower.filter()
-        user = self.request.query_params.get('search')
-        if user is not None:
-            queryset = get_list_or_404(
-                queryset.filter(following__username=user)
-            )
-        return queryset
-
-    def perform_create(self, serializer):
-        """Получает имя пользователя передаваемое в запросе POST.
-        Записывает в БД авторизованного инициатора запроса
-        и имя пользователя в качестве подписки. Если автор не найден
-        возваращает 404"""
-        follow = get_object_or_404(
-            User,
-            username=self.request.data['following']
-        )
-        serializer.save(
-            user=self.request.user,
-            following=follow
-        )
+        """Получает по related_name список подписок
+        пользователя - инициатора запроса"""
+        user = get_object_or_404(User, username=self.request.user.username)
+        return user.follower.all()
 
 
 class CommentViewsSet(viewsets.ModelViewSet):
