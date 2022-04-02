@@ -9,7 +9,6 @@ class Group(models.Model):
         max_length=200
     )
     slug = models.SlugField(
-        max_length=50,
         unique=True
     )
     description = models.TextField()
